@@ -4,27 +4,26 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@NoArgsConstructor
 @Getter
 @Setter
-public class UserDto {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class CategoryDto {
+	
 	
 	private int id;
-	@NotEmpty
-	private String name;
-	@Email
-	private String email;
-	@NotEmpty
-	private String password;
-	@NotEmpty
-	private String about;
+	@NotBlank
+	@Size(min=4)
+	private String categoryTitle;
+	@NotBlank
+	@Size(max=20)
+	private String categoryDescription;
 }

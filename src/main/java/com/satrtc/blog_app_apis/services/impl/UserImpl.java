@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.satrtc.blog_app_apis.entities.User;
 import com.satrtc.blog_app_apis.exception.ResourceNotFoundException;
@@ -11,6 +12,8 @@ import com.satrtc.blog_app_apis.payload.UserDto;
 import com.satrtc.blog_app_apis.repository.UserRepository;
 import com.satrtc.blog_app_apis.services.UserServices;
 
+
+@Service
 public class UserImpl implements UserServices {
 
 	@Autowired
@@ -56,7 +59,7 @@ public class UserImpl implements UserServices {
 		
 		List<User> userList=this.userRepository.findAll();
 		List<UserDto> userDtos=userList.stream().map(user->this.userToDto(user)).collect(Collectors.toList());
-	return userDtos;
+	   return userDtos;
 	}
 
 	@Override
