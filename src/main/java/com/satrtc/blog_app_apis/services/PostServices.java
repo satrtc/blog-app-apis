@@ -21,5 +21,7 @@ public interface PostServices {
 	public List<PostDto> getPostbyUser(int userId);
 	//get posts of a category
 	public List<PostDto> getPostbyCategory(int categID);
+	//get all posts
+	public List<PostDto> getAllPosts(int pageNumber, int pageSize);
 
 }

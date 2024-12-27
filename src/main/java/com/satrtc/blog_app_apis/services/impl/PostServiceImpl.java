@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
@@ -57,19 +60,33 @@ public class PostServiceImpl implements PostServices{
 	@Override
 	public PostDto updatePost(PostDto postDto, int id) {
 		// TODO Auto-generated method stub
-		return null;
+		Post post=this.postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","postID", id));
+		
+		post.setPostTitle(postDto.getTitle());
+		post.setImageName(postDto.getImageName());
+		post.setCategory(post.getCategory());
+		
+		Post updatedPost=this.postRepository.save(post);
+		PostDto updatedPostDto=this.modelMapper.map(updatedPost,PostDto.class);
+		
+		return updatedPostDto;
 	}
 
 	@Override
 	public void deletePost(int id) {
 		// TODO Auto-generated method stub
+		Post post=this.postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("post", "postID", id));
+		
+		this.postRepository.delete(post);
 		
 	}
 
 	@Override
 	public PostDto getPost(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		Post post=this.postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "postID", id));
+		PostDto postDto=this.modelMapper.map(post, PostDto.class);
+		return postDto;
 	}
 
 	@Override
@@ -78,7 +95,7 @@ public class PostServiceImpl implements PostServices{
 		User user=this.userRepositary.findById(userId).orElseThrow(()->new ResourceNotFoundException("user", "userId", userId));
 		List<Post> allPosts=this.postRepository.findByUser(user);
 		
-		List<PostDto> postDtos=allPosts.stream().map((post)-> this.modelMapper.map(allPosts, PostDto.class)).collect(Collectors.toList());
+		List<PostDto> postDtos=allPosts.stream().map((post)-> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
 		
 		return postDtos;
 	}
@@ -86,7 +103,21 @@ public class PostServiceImpl implements PostServices{
 	@Override
 	public List<PostDto> getPostbyCategory(int categID) {
 		// TODO Auto-generated method stub
-		return null;
+		Category category=this.categoryRepository.findById(categID).orElseThrow(()-> new ResourceNotFoundException("Category", "categID", categID));
+		List<Post> allposts=this.postRepository.findByCategory(category);
+		
+		List<PostDto> allpostDtos=allposts.stream().map((posts)->this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
+		 return allpostDtos;
+	}
+
+	@Override
+	public List<PostDto> getAllPosts(int pageNumber, int pageSize) {
+//		List<Post> allPosts=this.postRepository.findAll();
+		Pageable p=PageRequest.of(pageNumber, pageSize);
+		Page<Post> pagePosts=this.postRepository.findAll(p);
+		List<Post> allPosts=pagePosts.getContent();
+		List<PostDto> allPostsDto=allPosts.stream().map((posts)->this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
+		return allPostsDto;
 	}
 
 }
