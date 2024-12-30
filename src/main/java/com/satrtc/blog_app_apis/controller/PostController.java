@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.satrtc.blog_app_apis.entities.Post;
 import com.satrtc.blog_app_apis.payload.ApiResponse;
 import com.satrtc.blog_app_apis.payload.PostDto;
+import com.satrtc.blog_app_apis.payload.PostResponse;
 import com.satrtc.blog_app_apis.services.PostServices;
 
 import lombok.Builder.Default;
@@ -70,10 +71,10 @@ public class PostController {
 	
 	//getAllPosts 
 	@GetMapping("/posts")
-	public ResponseEntity<List<PostDto>> getAllposts(@RequestParam(required = false) Integer pageNumber, @RequestParam(required = false) Integer pageSize)
+	public ResponseEntity<PostResponse> getAllposts(@RequestParam(required = false) Integer pageNumber, @RequestParam(required = false) Integer pageSize)
 	{
-		List<PostDto> allposts=this.postServices.getAllPosts(pageNumber,pageSize);
-		return new ResponseEntity<List<PostDto>>(allposts,HttpStatus.OK);
+		PostResponse allPostRespone=this.postServices.getAllPosts(pageNumber,pageSize);
+		return new ResponseEntity<PostResponse>(allPostRespone,HttpStatus.OK);
 	}
 	
 	//delete post by using category

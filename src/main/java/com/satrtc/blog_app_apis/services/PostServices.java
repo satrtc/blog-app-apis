@@ -5,6 +5,7 @@ import java.util.List;
 import com.satrtc.blog_app_apis.entities.Post;
 import com.satrtc.blog_app_apis.payload.CategoryDto;
 import com.satrtc.blog_app_apis.payload.PostDto;
+import com.satrtc.blog_app_apis.payload.PostResponse;
 import com.satrtc.blog_app_apis.payload.UserDto;
 
 public interface PostServices {
@@ -22,6 +23,6 @@ public interface PostServices {
 	//get posts of a category
 	public List<PostDto> getPostbyCategory(int categID);
 	//get all posts
-	public List<PostDto> getAllPosts(int pageNumber, int pageSize);
+	public PostResponse getAllPosts(int pageNumber, int pageSize);
 
 }

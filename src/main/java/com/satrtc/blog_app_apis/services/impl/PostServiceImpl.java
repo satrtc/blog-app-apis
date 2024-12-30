@@ -18,6 +18,7 @@ import com.satrtc.blog_app_apis.entities.Post;
 import com.satrtc.blog_app_apis.entities.User;
 import com.satrtc.blog_app_apis.exception.ResourceNotFoundException;
 import com.satrtc.blog_app_apis.payload.PostDto;
+import com.satrtc.blog_app_apis.payload.PostResponse;
 import com.satrtc.blog_app_apis.repository.CategoryRepository;
 import com.satrtc.blog_app_apis.repository.PostRepository;
 import com.satrtc.blog_app_apis.repository.UserRepository;
@@ -109,15 +110,24 @@ public class PostServiceImpl implements PostServices{
 		List<PostDto> allpostDtos=allposts.stream().map((posts)->this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
 		 return allpostDtos;
 	}
+	
+	//method to handle get all posts with pagination
 
 	@Override
-	public List<PostDto> getAllPosts(int pageNumber, int pageSize) {
+	public PostResponse getAllPosts(int pageNumber, int pageSize) {
 //		List<Post> allPosts=this.postRepository.findAll();
 		Pageable p=PageRequest.of(pageNumber, pageSize);
 		Page<Post> pagePosts=this.postRepository.findAll(p);
 		List<Post> allPosts=pagePosts.getContent();
+		PostResponse postResponse=new PostResponse();
 		List<PostDto> allPostsDto=allPosts.stream().map((posts)->this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
-		return allPostsDto;
+		postResponse.setAllPosts(allPostsDto);
+		postResponse.setLastPage(pagePosts.isLast());
+		postResponse.setPageSize(pagePosts.getSize());
+		postResponse.setPagNumber(pagePosts.getNumber());
+		postResponse.setTotalElements(pagePosts.getNumberOfElements());
+		postResponse.setTotalPages(pagePosts.getTotalPages());
+		return postResponse;
 	}
 
 }
