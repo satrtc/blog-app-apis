@@ -23,6 +23,6 @@ public interface PostServices {
 	//get posts of a category
 	public List<PostDto> getPostbyCategory(int categID);
 	//get all posts
-	public PostResponse getAllPosts(int pageNumber, int pageSize);
+	public PostResponse getAllPosts(int pageNumber, int pageSize,String sortBy, String sortDirection);
 
 }
