@@ -26,6 +26,8 @@ public interface PostServices {
 	public PostResponse getAllPosts(int pageNumber, int pageSize,String sortBy, String sortDirection);
 	
 	//get post by matching title 
-	public List<PostDto> findBypostTitle(String title);
+//	public List<PostDto> findBypostTitle(String title);
+	List<PostDto> searchBypostTitle(String postTitle);
+
 
 }

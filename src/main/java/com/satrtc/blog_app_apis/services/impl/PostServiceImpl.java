@@ -133,9 +133,10 @@ public class PostServiceImpl implements PostServices{
 	}
 
 	@Override
-	public List<PostDto> findBypostTitle(String title) {
+	public List<PostDto> searchBypostTitle(String postTitle) {
 		// TODO Auto-generated method stub
-		List<Post> postMatchingTitle=this.postRepository.findBypostTitle(title);
+		System.out.println(postTitle);
+		List<Post> postMatchingTitle=this.postRepository.findBypostTitle(postTitle);
 		List<PostDto> postMatchingTitleDto=postMatchingTitle.stream().map((post)-> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
 		return postMatchingTitleDto;
 	}

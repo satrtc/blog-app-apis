@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.satrtc.blog_app_apis.entities.Post;
+import com.satrtc.blog_app_apis.payload.ApiConstansts;
 import com.satrtc.blog_app_apis.payload.ApiResponse;
 import com.satrtc.blog_app_apis.payload.PostDto;
 import com.satrtc.blog_app_apis.payload.PostResponse;
@@ -71,10 +72,10 @@ public class PostController {
 	
 	//getAllPosts 
 	@GetMapping("/posts")
-	public ResponseEntity<PostResponse> getAllposts(@RequestParam(required = false) Integer pageNumber,
-			@RequestParam(required = false) Integer pageSize,
-			@RequestParam(required=false, defaultValue = "postId") String sortBy,
-			@RequestParam(required = false, defaultValue = "asc")  String sortDirection)
+	public ResponseEntity<PostResponse> getAllposts(@RequestParam(required = false, defaultValue = ApiConstansts.PAGE_NUMBER) Integer pageNumber,
+			@RequestParam(required = false, defaultValue = ApiConstansts.PAGE_SIZE) Integer pageSize,
+			@RequestParam(required=false, defaultValue = ApiConstansts.SORT_BY) String sortBy,
+			@RequestParam(required = false, defaultValue = ApiConstansts.SORT_DIRECTION)  String sortDirection)
 	{
 		PostResponse allPostRespone=this.postServices.getAllPosts(pageNumber,pageSize,sortBy,sortDirection);
 		return new ResponseEntity<PostResponse>(allPostRespone,HttpStatus.OK);
@@ -89,10 +90,11 @@ public class PostController {
 	}
 	
 	//search a post by post title
-	@GetMapping("/post/search/{postTitle}")
-	public ResponseEntity<List<PostDto>> searchPostUsingTitle(@PathVariable String postTitle)
+	@GetMapping("/post/search")
+	public ResponseEntity<List<PostDto>> searchPostUsingTitle(@RequestParam("postTitle") String postTitle)
 	{
-		List<PostDto> postWithGivenTitle=this.postServices.findBypostTitle(postTitle);
+		System.out.println(postTitle);
+		List<PostDto> postWithGivenTitle=this.postServices.searchBypostTitle(postTitle);
 		return new ResponseEntity<List<PostDto>>(postWithGivenTitle,HttpStatus.OK);
 	}
 }
