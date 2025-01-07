@@ -16,6 +16,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 	List<Post> findByUser(User user);		
 	List<Post> findByCategory(Category category);
 
-	@Query("Select p from Post p where p.postTitle LIKE CONCAT('%', postTitle, '%')")
-	List<Post> findBypostTitle(String postTitle);
+	@Query("Select p from Post p where p.postTitle LIKE CONCAT('%',:postTitle,'%')")
+	List<Post> searchByPostTitle(@Param(value = "postTitle") String Title);
 }
