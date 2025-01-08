@@ -1,11 +1,10 @@
 package com.satrtc.blog_app_apis.entities;
 
-
-
 import java.util.Date;
-import java.util.List;
 
-import jakarta.persistence.Column;
+import org.hibernate.annotations.ManyToAny;
+
+import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,22 +22,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="posts")
-public class Post {
+@Table(name = "comments")
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int postId;
-	@Column(name="title")
-	private String postTitle;
-	private String imageName;
-	private Date addedDate;
-	
-	@ManyToOne
-	private Category category;
-	@ManyToOne
-	private User user;
-	
-	@OneToMany
-	private List<Comment> comments;
+public class Comment {
+
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private int commentId;
+private String content;
+private Date commentDate;
+
+@ManyToOne
+private User user;
+
+@ManyToOne
+private Post post;
+
 }

@@ -30,4 +30,8 @@ private String about;
 
 @OneToMany
 private List<Post> usersPost= new ArrayList<Post>();
+
+@OneToMany
+private List<Comment> mycomments;
 }
+ 
