@@ -17,13 +17,12 @@ public interface CommentServices {
 	public void removeComment(int commentId);
 	
 	//get all comments
-	public List<CommentDto> getAllComments(int pageNumbe, int pageSize);
+	public List<CommentDto> getAllComments();
 	
 	//get all comments by a user
-	public List<CommentDto> getCommentsOfUser(int pageNumber, int pageSize, int userId);
+	public List<CommentDto> getCommentsOfUser(int userId);
 	
 	//get all comments of a post
-	public List<CommentDto> getCommentsOfPost(int pageNumber, int pageSize, int postId);
+	public List<CommentDto> getCommentsOfPost( int postId);
 		
-	
 }

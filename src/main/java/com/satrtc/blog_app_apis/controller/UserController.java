@@ -26,7 +26,7 @@ import com.satrtc.blog_app_apis.services.impl.UserImpl;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 	
 	@Autowired

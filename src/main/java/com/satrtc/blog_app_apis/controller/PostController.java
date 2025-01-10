@@ -25,7 +25,7 @@ import com.satrtc.blog_app_apis.services.PostServices;
 import lombok.Builder.Default;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/post")
 public class PostController {
 	
 	@Autowired
@@ -33,7 +33,7 @@ public class PostController {
 	
 	
 	//create post
-	@PostMapping("/{userId}/category/{categoryId}/create-post")
+	@PostMapping("/create-post/user/{userId}/category/{categoryId}")
 	public ResponseEntity<PostDto> createPost(@RequestBody PostDto dtoPost,@PathVariable Integer userId, @PathVariable Integer categoryId)
 	{
 		PostDto postDtoSaved=this.postServices.createPost(dtoPost, userId, categoryId);
@@ -41,7 +41,7 @@ public class PostController {
 	}
 	
 	//update-post
-	@PutMapping("/post/{postID}")
+	@PutMapping("/update/{postID}")
 	public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable int postID)
 	{
 		PostDto updatedPostDto=this.postServices.updatePost( postDto, postID);
@@ -49,14 +49,14 @@ public class PostController {
 	}
 	
 	//get post by id
-	@GetMapping("/post/{postId}")
+	@GetMapping("/{postId}")
 	public ResponseEntity<PostDto> getPost(@PathVariable int postId)
 	{
 		PostDto postDto=this.postServices.getPost(postId);
 		return new ResponseEntity<PostDto>(postDto,HttpStatus.OK);
 	}
 	//get post by user
-	@GetMapping("/{userId}/get-post")
+	@GetMapping("/user/{userId}")
 	public ResponseEntity<List<PostDto>> getPosOfUser(@PathVariable int userId)
 	{
 		List<PostDto> allpostS=this.postServices.getPostbyUser(userId);
@@ -71,7 +71,7 @@ public class PostController {
 	}
 	
 	//getAllPosts 
-	@GetMapping("/posts")
+	@GetMapping("")
 	public ResponseEntity<PostResponse> getAllposts(@RequestParam(required = false, defaultValue = ApiConstansts.PAGE_NUMBER) Integer pageNumber,
 			@RequestParam(required = false, defaultValue = ApiConstansts.PAGE_SIZE) Integer pageSize,
 			@RequestParam(required=false, defaultValue = ApiConstansts.SORT_BY) String sortBy,
@@ -90,7 +90,7 @@ public class PostController {
 	}
 	
 	//search a post by post title
-	@GetMapping("/post/search")
+	@GetMapping("/search")
 	public ResponseEntity<List<PostDto>> searchPostUsingTitle(@RequestParam("postTitle") String postTitle)
 	{
 		System.out.println(postTitle);
